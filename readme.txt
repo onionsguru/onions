@@ -1,4 +1,8 @@
-1. To use asgi in our djano app, you have to ahead run one of the two commands:
+1. You need some packages to run: django, channels_redis, daphne
+
+2. To use asgi in our djano app, you have to ahead run one of the two commands:
 - 'source run_docker'
 - 'source run-daphne'
+
+
 
