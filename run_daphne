@@ -1,1 +1,1 @@
-daphne -p 8001 onions.asgi:application
+daphne -p 8000 onions.asgi:application
