@@ -1,0 +1,138 @@
+{% extends "chat/layout.html" %}
+
+{% block header %}
+<h1> Talking on "<b>{{chat_room.title_text}}</b>" </h1>	
+{% endblock %}
+
+{% block aside %}
+<style>
+	textarea {
+		background-color: #FFFFFF; 
+	}
+	
+	input {
+		background-color: #CCFFCC;
+	}
+	
+	div {
+		overflow-y:auto;
+		border-style: solid;
+		border-color: blue;
+		border-width: 1px;
+		margin: 0px;
+		padding: 2px;
+		background-color: lightblue;
+		font-size: 14px;
+	}
+</style>
+<div id='chatters'>...</div>
+{% endblock %}
+
+{% block article %}
+	{% if error_msg %}
+		<p> Error! : "{{error_msg}}" </p>
+		<p> Please, try it again with another theme title. </p>
+	{% else %}
+		<style>
+			textarea {
+				background-color: #FFFFFF; 
+			}
+			
+			input {
+				background-color: #CCFFCC;
+			}
+			
+			div.chat {
+				overflow-y:auto;
+				height: 200px;
+				border-style: solid;
+				border-color: yellow;
+				border-width: 1px;
+				margin: 0px;
+				padding: 2px;
+				background-color: lightyellow;
+				font-size: 14px;
+			}
+		</style>
+				
+		<div id='talk_area' class='chat'> </div>
+		
+		<form id='myform' action="{% url 'chat:talk' pk=chat_room.id chatter_id=user.id %}" 
+		method="post">  
+			{% csrf_token %}
+			{{form.input_text}}
+			<button id='mysend' type='button'> Send </button>
+		</form>		 		
+				
+	{% endif %}
+	
+		<script>
+		    var chatSocket = new WebSocket(
+			        'ws://' + window.location.host +
+			        '/ws/chat/' + "{{chat_room.id}}" + '/' + "{{user.id}}" + '/');
+		
+		    chatSocket.onmessage = function(e) {
+		        var data = JSON.parse(e.data);
+		        var message = data['message'];
+		        var chatters = data['chatters']
+		        $('#chatters').html(chatters);
+		 	   	var talkarea = $('#talk_area');    
+		        talkarea.html( talkarea.html() + message + '<br>');
+		        var tar = $('#talk_area');
+		        tar.scrollTop(tar.height());
+		    };
+	
+		    chatSocket.onclose = function(e) {
+		        console.error('Chat socket closed unexpectedly');
+		    };
+		
+			function f_send(message) {
+				chatSocket.send(JSON.stringify({
+		            'message': message,
+		            'user': "{{user.id}}"
+		        }));
+				
+				var tar = $('#talk_area');
+		        tar.scrollTop(tar.height());
+			} 
+		    
+			$('#myform').submit( function () {return false;} );
+			$('#input_text').keydown( function (e) {
+				if( e.which == 13 ) {
+					f_send($(this).val());
+					$(this).val('');
+					$(this).focus();
+					e.preventDefault();
+				}
+			});
+			
+			$('#mysend').click(function (e) {
+				f_send($('#input_text').val());
+				$('#input_text').val('');
+				$('#input_text').focus();
+				e.preventDefault();
+			});	
+		
+			
+			var f_adapt = function() {
+				var tar = $('#talk_area');
+				var h_article = $('article').height();
+				var w_article = $('article').width();
+				
+				tar.height(h_article-$('#input_text').height());
+				tar.width(w_article*0.8);
+				tar.scrollTop(tar.height());
+<!--
+				var chat = $('#chatters');
+				chat.width(w_article*0.2);
+				chat.height(tar.height());
+				chat.scrollTop(chat.height());
+-->
+			}
+			$(document).resize(f_adapt);
+			$(document).ready(f_adapt);	
+
+			console.log('enter.html: script passes');
+		</script>
+
+{% endblock %}

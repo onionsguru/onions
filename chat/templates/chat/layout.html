@@ -1,0 +1,27 @@
+{% extends "chat/layout_base.html" %}
+
+{% block title %}
+{% endblock %}
+
+{% block header %}
+<h2>Lee's Chatting Service</h2> 
+{% endblock %}
+
+<style>
+ul {
+  list-style-type: circle;
+  background: #3399ff;
+  padding: 20px;
+}
+</style>
+
+{% block nav %}	
+    <ul>
+      <li><a href="{% url 'chat:join' %}" onClick="window.location.reload()">Join</a> </li> 
+      <li><a href="{% url 'chat:open' %}" onClick="window.location.reload()">Open</a> </li>
+    </ul>
+{% endblock %}
+
+{% block footer %}
+<a href="http://www.papricacare.com">Please, visit Onion's home-page.</a>
+{% endblock %}
