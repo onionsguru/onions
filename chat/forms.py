@@ -3,7 +3,7 @@ from django.forms import widgets
 from chat import models
 
 class EnterForm(forms.Form):
-    input_text = forms.CharField(max_length=80, widget=forms.TextInput(
+    input_text = forms.CharField(max_length=150, widget=forms.TextInput(
         attrs={'id':'input_text', 'autofocus':'autofocus'}))
 
     def get_data(self):

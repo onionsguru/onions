@@ -1,7 +1,7 @@
 {% extends "chat/layout.html" %}
 
 {% block header %}
-<h1> Talking on "<b>{{chat_room.title_text}}</b>" </h1>	
+<h1> Talking on "<b>{{chat_room.title_text}}</b>" ({{auth_user}}) </h1>	
 {% endblock %}
 
 {% block aside %}
@@ -89,7 +89,7 @@
 			function f_send(message) {
 				chatSocket.send(JSON.stringify({
 		            'message': message,
-		            'user': "{{user.id}}"
+		            'user': "{{user.id}}",
 		        }));
 				
 				var tar = $('#talk_area');
@@ -116,18 +116,9 @@
 			
 			var f_adapt = function() {
 				var tar = $('#talk_area');
-				var h_article = $('article').height();
-				var w_article = $('article').width();
-				
-				tar.height(h_article-$('#input_text').height());
-				tar.width(w_article*0.8);
 				tar.scrollTop(tar.height());
-<!--
 				var chat = $('#chatters');
-				chat.width(w_article*0.2);
-				chat.height(tar.height());
 				chat.scrollTop(chat.height());
--->
 			}
 			$(document).resize(f_adapt);
 			$(document).ready(f_adapt);	

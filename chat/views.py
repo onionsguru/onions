@@ -38,7 +38,8 @@ class IndexView(generic.TemplateView):
                 chat_info.owner = 'TBD'
                 
             chat_list.append(chat_info)                                   
-        return render(request, self.template_name, {'chat_list':chat_list, 'msg':msg})                
+        return render(request, self.template_name, 
+                      {'chat_list':chat_list, 'msg':msg, 'auth_user':request.user})                
         
     def post(self, request, *args, **kwargs ):
         try:
@@ -46,7 +47,7 @@ class IndexView(generic.TemplateView):
             nickname = request.POST['nickname']
             ch = models.Chatroom.objects.all().get(pk=ch_id)
             user = models.User(nickname_text=nickname, created_date=datetime.datetime.now(), 
-                                       chatroom=ch, is_owner=False)
+                                       chatroom=ch, is_owner=False, auth_name=request.user)
             user.save()
             return HttpResponseRedirect(reverse('chat:talk',args=(ch_id, user.id)))
         except KeyError:
@@ -59,7 +60,7 @@ class OpenView(generic.TemplateView):
     template_name = 'chat/open.html'
 
     def get(self, request, *args, **kwargs ):
-        return render(request, self.template_name, {})
+        return render(request, self.template_name, {'auth_user':request.user})
     
     def post(self, request, *args, **kwargs ):
         theme = request.POST['theme']
@@ -74,7 +75,7 @@ class OpenView(generic.TemplateView):
                 chatroom = models.Chatroom(title_text=theme, created_date=datetime.datetime.now())
                 chatroom.save()
                 user = models.User(nickname_text=nickname, created_date=datetime.datetime.now(), 
-                                   chatroom=chatroom, is_owner=True)
+                                   chatroom=chatroom, is_owner=True, auth_name=request.user)
                 user.save()                                
                 return HttpResponseRedirect(reverse('chat:enter', args=(chatroom.id,user.id)))
         else:
@@ -116,7 +117,7 @@ class TalkView(generic.FormView):
         chatroom = models.Chatroom.objects.all().get(pk=kwargs['pk'])
         user = models.User.objects.all().get(pk=kwargs['chatter_id'])
         form = self.form_class()           
-        return render(request, self.template_name, {'form':form, 'chat_room':chatroom, 'user':user})        
+        return render(request, self.template_name, {'form':form, 'chat_room':chatroom, 'user':user, 'auth_user':request.user})        
         
     def post(self, request, *args, **kwargs ):
         pass
