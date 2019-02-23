@@ -20,7 +20,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '3sta@9a1r)64)1fe=kzuz6^8(0@%fvyky*%ehzp6y#-9fr*&a4'
+#SECRET_KEY = '3sta@9a1r)64)1fe=kzuz6^8(0@%fvyky*%ehzp6y#-9fr*&a4'
+with open(os.path.join(BASE_DIR, 'www_dir', 'secret_key.txt')) as f:
+    SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -77,7 +79,7 @@ WSGI_APPLICATION = 'onions.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'db', 'db.sqlite3'),
     }
 }
 
@@ -132,8 +134,9 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": ["redis://('ec2-54-180-87-212.ap-northeast-2.compute.amazonaws.com', 6379)"],
+#            "hosts": ["redis://('ec2-54-180-87-212.ap-northeast-2.compute.amazonaws.com', 6379)"],
+        "hosts":[('127.0.0.1',6379)],
         },
-        "ROUTING": "onions.routing.channel_routing", 
+#        "ROUTING": "onions.routing.channel_routing", 
     }
 }
