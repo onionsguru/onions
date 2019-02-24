@@ -78,6 +78,7 @@
 	
 		    chatSocket.onclose = function(e) {
 		        console.error('Chat socket closed unexpectedly');
+		        window.location.href="{% url 'chat:index' %}";
 		    };
 		
 			function f_send(message) {
