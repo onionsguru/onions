@@ -1,7 +1,7 @@
 {% extends "chat/layout.html" %}
 
-{% block header %}
-<h1> Talking on "<b>{{chat_room.title_text}}</b>" (logged by {{auth_user}}) </h1>	
+{% block header_msg %}
+<h2 style='margin:0px; padding:2px;'> Talking on "<b>{{chat_room.title_text}}</b>"</h2>	
 {% endblock %}
 
 {% block aside %}
@@ -13,19 +13,9 @@
 	input {
 		background-color: #CCFFCC;
 	}
-	
-	div {
-		overflow-y:auto;
-		border-style: solid;
-		border-color: blue;
-		border-width: 1px;
-		margin: 0px;
-		padding: 2px;
-		background-color: lightblue;
-		font-size: 14px;
-	}
 </style>
-<div id='chatters'>...</div>
+	
+<div style='height:300px;background-color:lightblue;padding:5px;margin:0px;overflow-y:auto;' id='chatters'>...</div>
 {% endblock %}
 
 {% block article %}
@@ -44,7 +34,7 @@
 			
 			div.chat {
 				overflow-y:auto;
-				height: 200px;
+				height:300px;
 				border-style: solid;
 				border-color: yellow;
 				border-width: 1px;
@@ -67,10 +57,13 @@
 	{% endif %}
 	
 		<script>
-		    var chatSocket = new WebSocket(
-			        'ws://' + window.location.host +
-			        '/ws/chat/' + "{{chat_room.id}}" + '/' + "{{user.id}}" + '/');
-		
+			try {
+			    var chatSocket = new WebSocket(
+				        'ws://' + window.location.host +
+				        '/ws/chat/' + "{{chat_room.id}}" + '/' + "{{user.id}}" + '/');
+			} catch (e) {
+				alert('The channel redis is not working!');
+			}
 		    chatSocket.onmessage = function(e) {
 		        var data = JSON.parse(e.data);
 		        var message = data['message'];

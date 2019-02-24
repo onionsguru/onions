@@ -17,7 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from chat import viewsets
-from django.views import generic
+import views
+from django.views.generic import TemplateView
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
@@ -31,6 +32,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', generic.TemplateView.as_view(template_name='home.html'), name='home'),
+    path('', views.HomeView.as_view(), name='home'),
     path('chat/', include('chat.urls')),
 ]

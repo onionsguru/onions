@@ -5,10 +5,12 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-  Hi {{ user.username }}!
-  <p><a href="{% url 'logout' %}">logout</a></p>
+  <h2> Hi {{ user.username }}!</h2><br>
+  <a href="{% url 'logout' %}">logout</a>
 {% else %}
-  <p>You are not logged in</p>
+  <h2>Welcome to OniChat</h2>
   <a href="{% url 'login' %}">login</a>
 {% endif %}
+  or,<br>
+  <a href="{% url 'chat:index' %}">go without authentication</a>
 {% endblock %}

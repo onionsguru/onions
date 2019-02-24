@@ -27,7 +27,7 @@ class IndexView(generic.TemplateView):
             chat_info.title = cr.title_text     
             cur_time = datetime.datetime.utcnow()
             open_time = cr.created_date.replace(tzinfo=None)
-            chat_info.time = cur_time - open_time 
+            chat_info.time = str(cur_time - open_time)[:7] 
             chatters = models.User.objects.filter(chatroom=cr.id)
             chat_info.num_chatters = len(chatters.all())
             chat_info.id = cr.id
@@ -46,7 +46,7 @@ class IndexView(generic.TemplateView):
             ch_id = request.POST['choice']    
             nickname = request.POST['nickname']
             ch = models.Chatroom.objects.all().get(pk=ch_id)
-            user = models.User(nickname_text=nickname, created_date=datetime.datetime.now(), 
+            user = models.User(nickname_text=nickname, created_date=datetime.datetime.utcnow(), 
                                        chatroom=ch, is_owner=False, auth_name=request.user)
             user.save()
             return HttpResponseRedirect(reverse('chat:talk',args=(ch_id, user.id)))
@@ -72,9 +72,9 @@ class OpenView(generic.TemplateView):
                                             args=(f'Chat room with the same theme: "{theme}" has already existed.',)))
             except ObjectDoesNotExist:
                 nickname = request.POST['nickname']                                             
-                chatroom = models.Chatroom(title_text=theme, created_date=datetime.datetime.now())
+                chatroom = models.Chatroom(title_text=theme, created_date=datetime.datetime.utcnow())
                 chatroom.save()
-                user = models.User(nickname_text=nickname, created_date=datetime.datetime.now(), 
+                user = models.User(nickname_text=nickname, created_date=datetime.datetime.utcnow(), 
                                    chatroom=chatroom, is_owner=True, auth_name=request.user)
                 user.save()                                
                 return HttpResponseRedirect(reverse('chat:enter', args=(chatroom.id,user.id)))
@@ -102,7 +102,6 @@ class EnterView(generic.FormView):
             user.save()
             form = self.form_class()  
 
-      
         return HttpResponseRedirect(reverse('chat:talk',args=(kwargs['pk'],kwargs['chatter_id'])))
     
     def post(self, request, *args, **kwargs ):

@@ -3,7 +3,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 import json
 from chat import models
 import datetime
-
+import pytz
 
 class ChatChannel(AsyncWebsocketConsumer):
     talk_backlog = dict(str())
@@ -13,9 +13,10 @@ class ChatChannel(AsyncWebsocketConsumer):
         self.user_id = self.scope['url_route']['kwargs']['user_id']
         self.room_group_id = 'chat_%s' % self.room_id
         user = models.User.objects.all().get(pk=self.user_id)        
-        cur_time = datetime.datetime.now()
-        message = f'Welcome~ <b>{user.nickname_text}</b> has joined at ({cur_time})'
-        
+        cur_time = datetime.datetime.now(pytz.timezone('Asia/Seoul'))
+        time_text = str(cur_time)
+        message = f'Welcome~ <b>{user.nickname_text}</b> has joined at <{time_text[:19]}>'
+
         # Join room group
         await self.channel_layer.group_add(
             self.room_group_id,
@@ -49,8 +50,6 @@ class ChatChannel(AsyncWebsocketConsumer):
             u = ch.user_set.first();
             u.is_owner = True 
             u.save()
-            print('----->')
-             
         
         await self.channel_layer.group_send(
             self.room_group_id,
