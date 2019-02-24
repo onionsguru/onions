@@ -3,13 +3,13 @@
 {% block aside %}
 {% endblock %}
 {% block article %}
-	<p> Fill the fields below, then press the "create and talk" button </p>	
+	<p> Fill the fields below, then press the "open" button </p>	
 	<form action="{% url 'chat:open' %}" method="post">
 		{% csrf_token %}
 		<hr>
 		<ul>
 			<li>Theme:<br> 
-			<input type="text" name="theme" value="" required autocomplete='off'/> </li>
+			<input type="text" name="theme" value="" required autocomplete='off' /> </li>
 			<li>Nickname:<br> 
 			<input type="text" name="nickname" value="" required/> </li>
 		</ul>
@@ -17,6 +17,6 @@
 <!-- 		
 		<button id='open' type='button' onclick="$('form').submit();">oepn and talk</button>
  -->
-		<input type='submit' value='open and talk' />
+		<input type='submit' value='open' />
 	</form>
 {% endblock %}
