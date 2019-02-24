@@ -9,7 +9,8 @@
   <a href="{% url 'logout' %}">logout</a>
 {% else %}
   <h2>Welcome to OniChat</h2>
-  <a href="{% url 'login' %}">login</a>
+  <a href="{% url 'login' %}">login</a>,
+  <a href="{% url 'accounts:signup' %}">signup</a>
 {% endif %}
   or,<br>
   <a href="{% url 'chat:index' %}">go without authentication</a>
