@@ -141,8 +141,8 @@ CHANNEL_LAYERS = {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
 #            "hosts": ["redis://('ec2-54-180-87-212.ap-northeast-2.compute.amazonaws.com', 6379)"],
-#        "hosts":[('127.0.0.1',6379)],
-        "hosts":[('ec2-13-209-64-148.ap-northeast-2.compute.amazonaws.com',6379)],
+       "hosts":[('127.0.0.1',6379)],
+#        "hosts":[('ec2-13-209-64-148.ap-northeast-2.compute.amazonaws.com',6379)],
         },
 #       "ROUTING": "onions.routing.channel_routing", 
     }
