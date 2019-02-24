@@ -27,7 +27,7 @@ with open(os.path.join(BASE_DIR, 'www_dir', 'secret_key.txt')) as f:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['env01.t5dpmmmpm9.ap-northeast-2.elasticbeanstalk.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['ec2-13-209-64-148.ap-northeast-2.compute.amazonaws.com', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -141,7 +141,8 @@ CHANNEL_LAYERS = {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
 #            "hosts": ["redis://('ec2-54-180-87-212.ap-northeast-2.compute.amazonaws.com', 6379)"],
-        "hosts":[('127.0.0.1',6379)],
+#        "hosts":[('127.0.0.1',6379)],
+        "hosts":[('ec2-13-209-64-148.ap-northeast-2.compute.amazonaws.com',6379)],
         },
 #       "ROUTING": "onions.routing.channel_routing", 
     }
