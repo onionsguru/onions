@@ -1,3 +1,5 @@
+<meta http-equiv="refresh" content="10">
+
 {% extends "chat/layout.html" %}
 
 {% block aside %}
@@ -9,7 +11,7 @@
 {% if chat_list %}
 	<b>
 	<div>
-	Your Nickname:
+	Nickname:
 	<input type='text' name='nickname' value='' required/>
 	<input type='submit' value='Join and talk' />
 	</div>
@@ -25,8 +27,8 @@
 {% if chat_list %}
 <table>
 	<tr>
-		<th>Chatting Theme</th>
-		<th>Room's Owner</th>
+		<th>Theme</th>
+		<th>Owner</th>
 		<th># of Chatters </th>
 		<th>Elapsed Time</th>
 {% for ch in chat_list %}
@@ -34,7 +36,7 @@
 	<div style="background-color:lightyellow">
 	<td>
 	<input type='radio' name='choice' id='choice{{forloop.counter}}' value='{{ch.id}}' required/>
-	<label for='choice{{forloop.counter}}'>{{ch.title}}</label>
+	<label for='choice{{forloop.counter}}'></label> {{ch.title}}
 	</td>
 	<td> {{ch.owner}} </td>
 	<td> {{ch.num_chatters }} </td> 

@@ -9,13 +9,10 @@
 	textarea {
 		background-color: #FFFFFF; 
 	}
-	
-	input {
-		background-color: #CCFFCC;
-	}
+
 </style>
 	
-<div style='height:300px;background-color:lightblue;padding:5px;margin:0px;overflow-y:auto;' id='chatters'>...</div>
+<div style='font-size:12px; height:300px;background-color:lightblue;padding:5px;margin:0px;overflow-y:auto;' id='chatters'>...</div>
 {% endblock %}
 
 {% block article %}
@@ -27,11 +24,7 @@
 			textarea {
 				background-color: #FFFFFF; 
 			}
-			
-			input {
-				background-color: #CCFFCC;
-			}
-			
+
 			div.chat {
 				overflow-y:auto;
 				height:300px;
@@ -51,8 +44,8 @@
 		method="post">  
 			{% csrf_token %}
 			{{form.input_text}}
-			<button id='mysend' type='button'> 전송 </button>
-			<button id='myleave' type='button'> 나가기 </button>
+			<button id='mysend' type='button'> send </button>
+			<button id='myleave' type='button'> leave </button>
 		</form>		 		
 				
 	{% endif %}
@@ -79,6 +72,7 @@
 		    chatSocket.onclose = function(e) {
 		        console.error('Chat socket closed unexpectedly');
 		        window.location.href="{% url 'chat:index' %}";
+		        alert('You have left the chatroom for some reason!');
 		    };
 		
 			function f_send(message) {

@@ -5,13 +5,19 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-  <h2> Hi {{ user.username }}!</h2><br>
+  <h2> Hi {{ user.username }}!</h2>
   <a href="{% url 'logout' %}">logout</a>
 {% else %}
-  <h2>Welcome to OniChat</h2>
+<style>
+a {
+	font-size: 24px;
+}
+</style>
+
+  <h1>Welcome to OniChat</h1>
   <a href="{% url 'login' %}">login</a>,
-  <a href="{% url 'accounts:signup' %}">signup</a>
+  <a href="{% url 'accounts:signup' %}"> signup </a>
 {% endif %}
   or,<br>
-  <a href="{% url 'chat:index' %}">go without authentication</a>
+  <a href="{% url 'chat:index' %}"> go without authentication</a>
 {% endblock %}

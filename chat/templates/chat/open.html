@@ -8,12 +8,15 @@
 		{% csrf_token %}
 		<hr>
 		<ul>
-			<li>Chatting Theme:<br> 
-			<input type="text" name="theme" value="" required/> </li>
-			<li>Your Nickname:<br> 
+			<li>Theme:<br> 
+			<input type="text" name="theme" value="" required autocomplete='off'/> </li>
+			<li>Nickname:<br> 
 			<input type="text" name="nickname" value="" required/> </li>
 		</ul>
-		<hr>		
-		<input type="submit" value="open and talk" />
+		<hr>
+<!-- 		
+		<button id='open' type='button' onclick="$('form').submit();">oepn and talk</button>
+ -->
+		<input type='submit' value='open and talk' />
 	</form>
 {% endblock %}
