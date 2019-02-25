@@ -93,7 +93,7 @@
 		
 		chatSocket.onclose = function(e) {
 		    console.error('Chat socket closed unexpectedly');
-		    window.location.href="{% url 'chat:index' %}";
+		    window.location.href="{% url 'home' %}";
 		    alert('You have left the chatroom for some reason!');
 		};
 		
