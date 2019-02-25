@@ -29,7 +29,8 @@ class ChatChannel(AsyncWebsocketConsumer):
             self.room_group_id,
             {
                 'type': 'chat_message',
-                'message': message
+                'message': message,
+                'img_src': '#'
             }
         )
 
@@ -55,7 +56,8 @@ class ChatChannel(AsyncWebsocketConsumer):
             self.room_group_id,
             {
                 'type': 'chat_message',
-                'message': message
+                'message': message,
+                'img_src': '#'
             }
         )
         
@@ -69,6 +71,7 @@ class ChatChannel(AsyncWebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
         user_id = text_data_json['user']
+        img_src = text_data_json['img_src']
         user = models.User.objects.all().get(pk=user_id)
         message = f'<b>{user.nickname_text}</b> : {message}'
 
@@ -84,7 +87,8 @@ class ChatChannel(AsyncWebsocketConsumer):
             self.room_group_id,
             {
                 'type': 'chat_message',
-                'message': message
+                'message': message,
+                'img_src': img_src
             }
         )
 
@@ -102,11 +106,13 @@ class ChatChannel(AsyncWebsocketConsumer):
     # Receive message from room group
     async def chat_message(self, event):
         message = event['message']
+        img_src = event['img_src']
         chatter_list = self.get_chatters(self.room_id)
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'message': message,
-            'chatters': chatter_list
+            'chatters': chatter_list,
+            'img_src': img_src
         }))
         
