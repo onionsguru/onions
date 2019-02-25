@@ -41,6 +41,7 @@
 			    height: 100px;
 			   	border-style: solid;
 				border-color: coral;
+				border-width: 1px;
 			}
 		</style>
 				
@@ -97,22 +98,19 @@
 		};
 		
 		function f_send(message) {
-			$('#ajaxBusy').show(); 
-			
+			$('#ajaxBusy').show(); 	
 			var img_src = $('#myImg').attr('src');
-			//var img_src='http://localhost:8000/static/chat/test1.jpg';
-			
 			chatSocket.send(JSON.stringify({
 		        'message': message,
 		        'user': "{{user.id}}",
 		        'img_src': img_src,
 		    }));
-			
 			var tar = $('#talk_area');
 		    tar.scrollTop(tar.height());
-		    
-		    $('#myImg').attr('src', '#');
-		    $("#file_loader").val('');
+		    if( $('#myImg').attr('src') != '#' ) {
+			    $('#myImg').attr('src', '#');
+			    $("#file_loader").val('');
+			}
 		} 
 		
 		$('#myform').submit( function () {return false;} );
