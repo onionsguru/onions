@@ -98,9 +98,9 @@ class ChatChannel(AsyncWebsocketConsumer):
         
         for u in chatroom.user_set.all():
             if u.is_owner:
-                chatter_list.append('<b><i>'+ u.nickname_text+ ' (' + u.auth_name + ')</i></b><br>')
+                chatter_list.append('<b> &#9819; ' + u.nickname_text+ ' (' + u.auth_name + ')</b><br>')
             else:
-                chatter_list.append(u.nickname_text+' (' + u.auth_name + ')<br>')
+                chatter_list.append(u.nickname_text+' (' + u.auth_name + ')')
         return chatter_list
       
     # Receive message from room group

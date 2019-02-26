@@ -7,12 +7,10 @@
 	<form action="{% url 'chat:open' %}" method="post">
 		{% csrf_token %}
 		<hr>
-		<ul>
-			<li>Theme:<br> 
-			<input type="text" name="theme" value="" required autocomplete='off' /> </li>
-			<li>Nickname:<br> 
-			<input type="text" name="nickname" value="" required autocomplete='off'/> </li>
-		</ul>
+		Theme:<br> 
+		<input type="text" name="theme" value="" required autocomplete='off' /><br>
+		Nickname:<br> 
+		<input type="text" name="nickname" value="" required autocomplete='off'/>
 		<hr>
 <!-- 		
 		<button id='open' type='button' onclick="$('form').submit();">oepn and talk</button>

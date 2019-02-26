@@ -4,6 +4,7 @@
 <h2 style='margin:0px; padding:2px;'> Talking on "<b>{{chat_room.title_text}}</b>"</h2>	
 {% endblock %}
 
+<!--
 {% block aside %}
 <style>
 	textarea {
@@ -14,6 +15,7 @@
 	
 <div style='font-size:12px; height:300px;background-color:lightblue;padding:5px;margin:0px;overflow-y:auto;' id='chatters'>...</div>
 {% endblock %}
+-->
 
 {% block article %}
 	{% if error_msg %}
@@ -26,14 +28,25 @@
 			}
 
 			div.chat {
+				float:left;
 				overflow-y:auto;
+				width:70%;
 				height:300px;
-				border-style: solid;
-				border-color: yellow;
-				border-width: 1px;
 				margin: 0px;
-				padding: 2px;
+				padding: 3px;
+				overflow-y:auto;
 				background-color: lightyellow;
+				font-size: 14px;
+			}
+			div.chater {
+				float:left;
+				overflow-y:auto;
+				width:30%;
+				height:300px;
+				margin: 0px;
+				padding: 3px;
+				overflow-y:auto;
+				background-color: lightblue;
 				font-size: 14px;
 			}
 			
@@ -44,18 +57,34 @@
 				border-width: 1px;
 			}
 		</style>
-				
-		<div id='talk_area' class='chat'> </div>
+		
+		<div style='display:inline-block;width:100%'>
+			<div id='talk_area' class='chat'> </div>
+			<div class='chater' id='chatters'>...</div>	
+		</div>
 		
 		<form id='myform' action="{% url 'chat:talk' pk=chat_room.id chatter_id=user.id %}" 
 		method="post">  
 			{% csrf_token %}
-			{{form.input_text}}
-			<button id='mysend' type='button'>Send</button>
-			<button id='myleave' type='button'> leave </button><br>
-		
-			<div><input id='file_loader' type='file' accept="image/x-png,image/gif,image/jpeg"/></div>
-			<div id='img-div'><img id="myImg" src="#" class='thumb'></div>	 	
+			<div style='width:100%; display:inline-block;'>
+				<div style='float:left; width:40%;height:100%;padding:5px;margin:1px'>
+				
+				<!--  {{form.input_text}}<br> -->
+							
+				<input type='text' id='input_text' autofocus='autofocus' autocomplete='off' style='width:100%'/>	
+				<button id='mysend' type='button'>Send</button>
+				<button id='myleave' type='button'> leave </button>
+				</div>
+				
+				<div align='left'><b><i>&nbsp; Pick an image to send together</i></b></div>
+				<div style='float:right; width:58%;height:100%;border-style:dotted; padding:5px;margin:1px'>
+				filters:
+				<input type='checkbox' name='msgfilter' value='privacies'>Privacies </input>
+				<input type='checkbox' name='msgfilter' value='cusses'>Porns</input><br>
+				<input id='file_loader' type='file' accept="image/x-png,image/gif,image/jpeg"/>
+				<div id='img-div'><img id="myImg" src="#" class='thumb'></div>	 
+				</div>	
+			</div>
 		</form>
 		
 		<script>
