@@ -7,13 +7,11 @@
 {% csrf_token %}
 
 {% if chat_list %}
-	<b>
 	<div>
 	Nickname:
 	<input type='text' name='nickname' value='' required autocomplete:'off'/>
 	<input type='submit' value='join' />
 	</div>
-	</b>
 {% endif %}
 
 {% if msg %}
@@ -27,8 +25,8 @@
 	<tr>
 		<th>Theme</th>
 		<th>Owner</th>
-		<th># of Chatters </th>
-		<th>Elapsed Time</th>
+		<th>Population </th>
+		<th>Time</th>
 {% for ch in chat_list %}
 	<tr> 
 	<div style="background-color:lightyellow">

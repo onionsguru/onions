@@ -37,7 +37,8 @@ class IndexView(generic.TemplateView):
             except ObjectDoesNotExist:
                 chat_info.owner = 'TBD'
                 
-            chat_list.append(chat_info)                                   
+            chat_list.append(chat_info)  
+                                             
         return render(request, self.template_name, 
                       {'chat_list':chat_list, 'msg':msg, 'auth_user':request.user})                
         
@@ -46,8 +47,14 @@ class IndexView(generic.TemplateView):
             ch_id = request.POST['choice']    
             nickname = request.POST['nickname']
             ch = models.Chatroom.objects.all().get(pk=ch_id)
+            
+            if request.user.is_authenticated:
+                auth_name = request.user
+            else:
+                auth_name = ''
+                
             user = models.User(nickname_text=nickname, created_date=datetime.datetime.utcnow(), 
-                                       chatroom=ch, is_owner=False, auth_name=request.user)
+                                       chatroom=ch, is_owner=False, auth_name=auth_name)
             user.save()
             return HttpResponseRedirect(reverse('chat:talk',args=(ch_id, user.id)))
         except KeyError:
@@ -74,8 +81,14 @@ class OpenView(generic.TemplateView):
                 nickname = request.POST['nickname']                                             
                 chatroom = models.Chatroom(title_text=theme, created_date=datetime.datetime.utcnow())
                 chatroom.save()
+                
+                if request.user.is_authenticated:
+                    auth_name = request.user
+                else:
+                    auth_name = ''
+            
                 user = models.User(nickname_text=nickname, created_date=datetime.datetime.utcnow(), 
-                                   chatroom=chatroom, is_owner=True, auth_name=request.user)
+                                   chatroom=chatroom, is_owner=True, auth_name=auth_name)
                 user.save()                                
                 return HttpResponseRedirect(reverse('chat:enter', args=(chatroom.id,user.id)))
         else:

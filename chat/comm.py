@@ -97,10 +97,17 @@ class ChatChannel(AsyncWebsocketConsumer):
         chatter_list = []
         
         for u in chatroom.user_set.all():
-            if u.is_owner:
-                chatter_list.append('<b>' + u.nickname_text+ ' (' + u.auth_name + ')</b>&#9819;<br>')
+            if u.auth_name != '':         
+                if u.is_owner:
+                    chatter_list.append('<b>' + u.nickname_text+ ' (' + u.auth_name + ')</b>&#9819;<br>')
+                else:
+                    chatter_list.append(u.nickname_text+' (' + u.auth_name + ')')
             else:
-                chatter_list.append(u.nickname_text+' (' + u.auth_name + ')')
+                if u.is_owner:
+                    chatter_list.append('<b>' + u.nickname_text + '</b>&#9819;<br>')
+                else:
+                    chatter_list.append(u.nickname_text+'<br>')
+             
         return chatter_list
       
     # Receive message from room group
