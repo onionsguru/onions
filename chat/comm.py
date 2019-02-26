@@ -15,7 +15,7 @@ class ChatChannel(AsyncWebsocketConsumer):
         user = models.User.objects.all().get(pk=self.user_id)        
         cur_time = datetime.datetime.now(pytz.timezone('Asia/Seoul'))
         time_text = str(cur_time)
-        message = f'Welcome~ <b>{user.nickname_text}</b> has joined at <{time_text[:19]}>'
+        message = f'<b>{user.nickname_text}</b> has joined at <{time_text[:19]}>'
 
         # Join room group
         await self.channel_layer.group_add(
@@ -40,7 +40,7 @@ class ChatChannel(AsyncWebsocketConsumer):
         self.user_id = self.scope['url_route']['kwargs']['user_id']
  
         user = models.User.objects.all().get(pk=self.user_id)        
-        message = f'Bye~ <b>{user.nickname_text}</b> has left!'
+        message = f' <b>{user.nickname_text}</b> has left!'
         is_owner = user.is_owner
         user.delete()     
         
@@ -98,7 +98,7 @@ class ChatChannel(AsyncWebsocketConsumer):
         
         for u in chatroom.user_set.all():
             if u.is_owner:
-                chatter_list.append('<b> &#9819; ' + u.nickname_text+ ' (' + u.auth_name + ')</b><br>')
+                chatter_list.append('<b>' + u.nickname_text+ ' (' + u.auth_name + ')</b>&#9819;<br>')
             else:
                 chatter_list.append(u.nickname_text+' (' + u.auth_name + ')')
         return chatter_list

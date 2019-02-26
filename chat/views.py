@@ -82,9 +82,6 @@ class OpenView(generic.TemplateView):
             return HttpResponseRedirect(reverse('chat:enter',                                             
                                         args=('The chat theme or nickname has been empty.',)))
             
-class JoinView(generic.TemplateView):
-    template_name = 'chat/join.html'
-    
 class EnterView(generic.FormView):
     template_name = 'chat/enter.html'
     form_class = forms.EnterForm
