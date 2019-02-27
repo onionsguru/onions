@@ -27,7 +27,7 @@ with open(os.path.join(BASE_DIR, 'www_dir', 'secret_key.txt')) as f:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ec2-13-124-133-93.ap-northeast-2.compute.amazonaws.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['chat.onionsapp.com', 'localhost', '127.0.0.1']
 
 # Application definition
 
