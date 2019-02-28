@@ -99,12 +99,12 @@ class ChatChannel(AsyncWebsocketConsumer):
         for u in chatroom.user_set.all():
             if u.auth_name != '':         
                 if u.is_owner:
-                    chatter_list.append('<b>' + u.nickname_text+ ' (' + u.auth_name + ')</b> &#9819;<br>')
+                    chatter_list.append('<b>' + u.nickname_text+ ' (' + u.auth_name + ')</b>&nbsp; &#9819;<br>')
                 else:
                     chatter_list.append(u.nickname_text+' (' + u.auth_name + ')')
             else:
                 if u.is_owner:
-                    chatter_list.append('<b>' + u.nickname_text + '</b>&#9819;<br>')
+                    chatter_list.append('<b>' + u.nickname_text + '</b>&nbsp; &#9819;<br>')
                 else:
                     chatter_list.append(u.nickname_text+'<br>')
              
