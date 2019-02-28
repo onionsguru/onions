@@ -101,10 +101,9 @@
  		    	img_added.click(function() {
 		    	    $(this).toggleClass("thumb");    
 		    	});
-		    	$('#talk_area').append(img_added);
+ 		    	talkarea.append(img_added);
 			}
-		    var tar = $('#talk_area');
-		    tar.scrollTop(tar.height());
+		    talkarea.scrollTop(talkarea.prop('scrollHeight')-talkarea.height());
 		};
 		
 		chatSocket.onclose = function(e) {
