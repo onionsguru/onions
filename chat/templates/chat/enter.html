@@ -103,7 +103,11 @@
 		    	});
  		    	talkarea.append(img_added);
 			}
-		    talkarea.scrollTop(talkarea.prop('scrollHeight')-talkarea.height());
+			sh = talkarea.prop('scrollHeight');
+			h = talkarea.height();
+			st = talkarea.scrollTop();
+			if( sh > h + st )
+		    	talkarea.scrollTop(sh-h);
 		};
 		
 		chatSocket.onclose = function(e) {
@@ -121,7 +125,7 @@
 		        'img_src': img_src,
 		    }));
 			var tar = $('#talk_area');
-		    tar.scrollTop(tar.height());
+		  
 		    if( $('#myImg').attr('src') != '#' ) {
 			    $('#myImg').attr('src', '#');
 			    $("#file_loader").val('');
@@ -150,14 +154,7 @@
 			e.preventDefault();
 			window.location.href="{% url 'chat:index' %}";
 		});
-		
-		var f_adapt = function() {
-			var tar = $('#talk_area');
-			tar.scrollTop(tar.height());
-			var chat = $('#chatters');
-			chat.scrollTop(chat.height());
-		}
-	
+
 		function imageIsLoaded(e) {
 	        $('#myImg').attr('src', e.target.result);
 	    };
